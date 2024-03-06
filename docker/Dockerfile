@@ -1,0 +1,30 @@
+ARG TAG
+FROM ghcr.io/ros-industrial-consortium/scan_n_plan_workshop:${TAG}
+
+SHELL ["/bin/bash", "-c"]
+
+ENV DEBIAN_FRONTEND noninteractivej
+
+USER root
+
+# Install Python dependencies
+RUN python3 -m pip install open3d pyquaternion --upgrade
+
+# Bind mount the source directory so as not to unnecessarily copy source code into the docker image
+ARG WORKSPACE_DIR=/opt/snp_automate_2022
+RUN --mount=type=bind,target=${WORKSPACE_DIR}/src/snp_automate_2022 \
+  apt update -y -qq \
+  && source /opt/snp/install/setup.bash \
+  && vcs import ${WORKSPACE_DIR}/src < ${WORKSPACE_DIR}/src/snp_automate_2022/dependencies.repos --shallow \
+  && rosdep install \
+    --from-paths ${WORKSPACE_DIR}/src \
+    -iry \
+    --skip-keys libvtk
+
+# Build the repository
+# Bind mount the source directory so as not to unnecessarily copy source code into the docker image
+RUN --mount=type=bind,target=${WORKSPACE_DIR}/src/snp_automate_2022 \
+  source /opt/snp/install/setup.bash \
+  && cd ${WORKSPACE_DIR} \ 
+  && colcon build --cmake-args \
+  && rm -rf build log
