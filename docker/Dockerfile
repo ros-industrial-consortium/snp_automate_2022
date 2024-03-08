@@ -10,6 +10,9 @@ USER root
 # Install Python dependencies
 RUN python3 -m pip install open3d pyquaternion --upgrade
 
+# Run apt update and install useful utilities like sudo
+RUN apt update -y -qq && apt install -y -qq sudo
+
 # Bind mount the source directory so as not to unnecessarily copy source code into the docker image
 ARG WORKSPACE_DIR=/opt/snp_automate_2022
 RUN --mount=type=bind,target=${WORKSPACE_DIR}/src/snp_automate_2022 \
