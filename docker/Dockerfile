@@ -7,8 +7,6 @@ ENV DEBIAN_FRONTEND noninteractivej
 
 USER root
 
-# Install Python dependencies
-RUN python3 -m pip install open3d pyquaternion --upgrade
 
 # Run apt update and install useful utilities like sudo
 RUN apt update -y -qq && apt install -y -qq sudo
@@ -21,8 +19,7 @@ RUN --mount=type=bind,target=${WORKSPACE_DIR}/src/snp_automate_2022 \
   && vcs import ${WORKSPACE_DIR}/src < ${WORKSPACE_DIR}/src/snp_automate_2022/dependencies.repos --shallow \
   && rosdep install \
     --from-paths ${WORKSPACE_DIR}/src \
-    -iry \
-    --skip-keys libvtk
+    -iry
 
 # Build the repository
 # Bind mount the source directory so as not to unnecessarily copy source code into the docker image
