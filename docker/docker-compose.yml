@@ -1,0 +1,66 @@
+version: '3'
+services:
+  snp_automate_2022:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - TAG=foxy-master
+    environment:
+      DISPLAY: $DISPLAY
+      XAUTHORITY: $XAUTHORITY
+      # NVIDIA_DRIVER_CAPABILITIES: all
+      ROS_LOG_DIR: /tmp/.ros
+      ROS_LOCALHOST_ONLY: $ROS_LOCALHOST_ONLY
+      ROS_DOMAIN_ID: $ROS_DOMAIN_ID
+    container_name: snp_automate_2022
+    image: ghcr.io/ros-industrial-consortium/snp_automate_2022:foxy-master
+    stdin_open: true
+    tty: true
+    network_mode: host
+    privileged: true
+    user: ${CURRENT_UID}  # CURRENT_UID=$(id -u):$(id -g)
+    group_add:
+      - sudo
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/hosts:/etc/hosts
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - /etc/shadow:/etc/shadow:ro
+      - /dev:/dev
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+  
+  # ROS1 bridge
+  ros1-bridge:
+    environment:
+      ROS_LOCALHOST_ONLY: $ROS_LOCALHOST_ONLY
+      ROS_DOMAIN_ID: $ROS_DOMAIN_ID
+      ROS_LOG_DIR: /tmp/.ros
+    volumes:
+      # Mount DDS shared memory location; see https://stackoverflow.com/questions/65900201/troubles-communicating-with-ros2-node-in-docker-container
+      - /dev/shm:/dev/shm
+      - /etc/hosts:/etc/hosts
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - /etc/shadow:/etc/shadow:ro
+    stdin_open: true
+    tty: true
+    container_name: ros1-bridge
+    image: ghcr.io/ros-industrial/ros1_bridge:noetic-foxy
+    privileged: true
+    
+    # Run as the same user as the other system
+    # CURRENT_UID=$(id -u):$(id -g)
+    user: ${CURRENT_UID}
+
+    # Share the network with the host PC
+    network_mode: host
+    ipc: host
+    pid: host
