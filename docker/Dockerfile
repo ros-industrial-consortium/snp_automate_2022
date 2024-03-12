@@ -28,3 +28,6 @@ RUN --mount=type=bind,target=${WORKSPACE_DIR}/src/snp_automate_2022 \
   && cd ${WORKSPACE_DIR} \ 
   && colcon build --cmake-args \
   && rm -rf build log
+
+COPY --chmod=755 docker/launch_snp_automate_2022.sh /opt/launch_snp_automate_2022.sh
+ENTRYPOINT ["/opt/launch_snp_automate_2022.sh"]
