@@ -167,7 +167,23 @@
   </joint>
 
   <!-- Add TCP -->
-  <link name="sand_tcp"/>
+  <xacro:property name="media_radius" value="0.075"/>
+  <xacro:property name="media_length" value="0.05"/>
+  <xacro:property name="media_collision_offset" value="0.01"/>
+  <link name="sand_tcp">
+    <visual>
+      <origin xyz="0.0 0.0 ${-(media_length / 2.0)}"/>
+      <geometry>
+        <cylinder radius="${media_radius}" length="${media_length}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 ${-(media_length / 2.0) - media_collision_offset}"/>
+      <geometry>
+        <cylinder radius="${media_radius}" length="${media_length - media_collision_offset}"/>
+      </geometry>
+    </collision>
+  </link>
   <joint name="sand_tcp_joint" type="fixed">
     <parent link="tool_flange"/>
     <child link="sand_tcp"/>
