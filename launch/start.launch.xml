@@ -43,17 +43,24 @@
     <param name="robot_description" value="$(var robot_description)"/>
     <param name="robot_description_semantic" value="$(var robot_description_semantic)"/>
     <param name="follow_joint_trajectory_action" value="$(var follow_joint_trajectory_action)"/>
-    <!-- TSDF parameters -->
-    <param name="tsdf.min.x" value="0.21"/>
-    <param name="tsdf.min.y" value="-0.45"/>
-    <param name="tsdf.min.z" value="0.112"/>
-    <param name="tsdf.max.x" value="1.51"/>
-    <param name="tsdf.max.y" value="0.45"/>
-    <param name="tsdf.max.z" value="0.527"/>
-    <param name="tsdf.voxel_length" value="0.01"/>
-    <param name="tsdf.sdf_trunc" value="0.03"/>
-    <param name="rgbd.depth_scale" value="1000.0"/>
-    <param name="rgbd.depth_trunc" value="1.1"/>
+    <!-- Industrial Reconstruction parameters -->
+    <param name="ir.tsdf.min.x" value="0.21"/>
+    <param name="ir.tsdf.min.y" value="-0.45"/>
+    <param name="ir.tsdf.min.z" value="0.112"/>
+    <param name="ir.tsdf.max.x" value="1.51"/>
+    <param name="ir.tsdf.max.y" value="0.45"/>
+    <param name="ir.tsdf.max.z" value="0.527"/>
+    <param name="ir.tsdf.voxel_length" value="0.01"/>
+    <param name="ir.tsdf.sdf_trunc" value="0.03"/>
+    <param name="ir.rgbd.depth_scale" value="1000.0"/>
+    <param name="ir.rgbd.depth_trunc" value="1.1"/>
+    <param name="ir.live" value="true"/>
+    <param name="ir.min_faces" value="3000"/>
+    <param name="ir.normal_angle_tol" value="85.0"/>
+    <param name="ir.normal_x" value="0.0"/>
+    <param name="ir.normal_y" value="0.0"/>
+    <param name="ir.normal_z" value="1.0"/>
+    <param name="ir.archive_dir" value=""/>
   </node>
 
   <!-- Launch Open3d Interface Node -->
