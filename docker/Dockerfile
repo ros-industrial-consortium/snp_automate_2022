@@ -11,7 +11,7 @@ USER root
 RUN apt update -y -qq && apt install -y -qq sudo python3 python3-pip
 
 # Install pyquaternion
-RUN python3 -m pip install pyquaternion
+RUN python3 -m pip install pyquaternion open3d 'numpy>=1.19.5,<1.27.0'
 
 # Install the dependency repositories
 # Use a tmpfs mount for the workspace so as not to unnecessarily copy files into the final image
