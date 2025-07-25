@@ -1,0 +1,14 @@
+# services:
+#   snp_automate_2022:
+#     environment:
+#       SNP_SIM_ROBOT: true
+#       SNP_SIM_VISION: true
+#       SNP_BYPASS_EXECUTION: false
+#       NVIDIA_DRIVER_CAPABILITIES: all
+#     deploy:
+#       resources:
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               count: 1
+#               capabilities: [gpu]

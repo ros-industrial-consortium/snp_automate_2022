@@ -1,20 +1,18 @@
-version: '3'
 services:
   snp_automate_2022:
     build:
       context: ..
       dockerfile: docker/Dockerfile
       args:
-        - TAG=foxy-5.0
+        - TAG=foxy-6.0
     environment:
       DISPLAY: $DISPLAY
       XAUTHORITY: $XAUTHORITY
-      # NVIDIA_DRIVER_CAPABILITIES: all
       ROS_LOG_DIR: /tmp/.ros
       ROS_LOCALHOST_ONLY: $ROS_LOCALHOST_ONLY
       ROS_DOMAIN_ID: $ROS_DOMAIN_ID
     container_name: snp_automate_2022
-    image: ghcr.io/ros-industrial-consortium/snp_automate_2022:foxy-5.0
+    image: ghcr.io/ros-industrial-consortium/snp_automate_2022:foxy-6.0
     stdin_open: true
     tty: true
     network_mode: host
@@ -29,13 +27,6 @@ services:
       - /etc/group:/etc/group:ro
       - /etc/shadow:/etc/shadow:ro
       - /dev:/dev
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
   
   # ROS1 bridge
   ros1-bridge:
