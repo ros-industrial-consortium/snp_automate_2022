@@ -37,6 +37,7 @@ jobs:
         with:
           before-script: source /opt/snp/install/setup.bash
           ccache-prefix: ${{ matrix.distro }}
+          add-ros-ppa: false
           vcs-file: dependencies.repos
           target-path: target_ws/src
           target-args: --cmake-args -DCMAKE_BUILD_TYPE=Debug
